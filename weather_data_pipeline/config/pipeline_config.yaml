@@ -1,0 +1,14 @@
+# File: config/pipeline_config.yaml
+
+weather_api_config:
+  api_key: "649865f0f8f46c93cbaf910a1e82eeeb"
+  city: "New York"
+
+data_storage:
+  raw_data_path: "data/raw"
+  processed_data_path: "data/processed"
+
+airflow_settings:
+  schedule_interval: "0 0 * * *"  # Run daily at midnight
+  catchup: false
+  max_active_runs: 1
