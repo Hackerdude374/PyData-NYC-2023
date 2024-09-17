@@ -1,97 +1,84 @@
 # Weather Data Pipeline
 
 ## Overview
-This project implements a daily weather data pipeline using Apache Airflow. It fetches weather data from OpenWeatherMap API, processes it, and stores both raw and cleaned data.
-
-## Project Structure
-```
-weather_data_pipeline/
-├── config/
-│   └── pipeline_config.yaml
-├── tasks/
-│   ├── fetch_weather_data.py
-│   └── clean_weather_data.py
-├── workflows/
-│   └── weather_pipeline.py
-├── Dockerfile
-├── requirements.txt
-└── README.md
-```
+This project fetches daily weather data from OpenWeatherMap and processes it using Apache Airflow. It's designed to demonstrate a simple ETL (Extract, Transform, Load) process.
 
 ## Prerequisites
-- Python 3.8+
-- Docker (optional)
+- Python 3.8 or higher
+- pip (Python package installer)
 - OpenWeatherMap API key
 
 ## Setup
 
-### 1. Clone the repository
-```bash
-git clone <repository-url>
-cd weather_data_pipeline
-```
+1. Clone the repository:
+   ```
+   git clone <repository-url>
+   cd weather_data_pipeline
+   ```
 
-### 2. Set up a virtual environment
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-```
+2. Create a virtual environment:
+   ```
+   python -m venv venv
+   ```
 
-### 3. Install dependencies
-```bash
-pip install -r requirements.txt
-```
+3. Activate the virtual environment:
+   - On Windows:
+     ```
+     .\venv\Scripts\activate
+     ```
+   - On macOS and Linux:
+     ```
+     source venv/bin/activate
+     ```
 
-### 4. Configure the API key
-Edit `config/pipeline_config.yaml` and replace `your_openweathermap_api_key_here` with your actual API key.
+4. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
 
-### 5. Set up Airflow
-```bash
-export AIRFLOW_HOME=$(pwd)/airflow
-airflow db init
-airflow users create --username admin --firstname Your --lastname Name --role Admin --email your.email@example.com --password your_password
-```
+5. Set up Airflow:
+   ```
+   set AIRFLOW_HOME=%CD%
+   airflow db init
+   airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com
+   ```
+
+6. Update API key:
+   Edit `config/pipeline_config.yaml` and replace `your_openweathermap_api_key_here` with your actual OpenWeatherMap API key.
 
 ## Running the Pipeline
 
-### Using Python and Airflow directly:
-
 1. Start the Airflow webserver:
-```bash
-airflow webserver --port 8080
-```
+   ```
+   airflow webserver --port 8080
+   ```
 
-2. In a new terminal, start the Airflow scheduler:
-```bash
-airflow scheduler
-```
+2. In a new terminal window, start the Airflow scheduler:
+   ```
+   airflow scheduler
+   ```
 
-3. Access the Airflow web interface at `http://localhost:8080` and enable the `weather_data_pipeline` DAG.
+3. Open a web browser and go to `http://localhost:8080`
 
-### Using Docker:
+4. Log in with username `admin` and password `admin`
 
-1. Build the Docker image:
-```bash
-docker build -t weather_pipeline .
-```
+5. Find the `weather_data_pipeline` DAG and turn it on
 
-2. Run the Airflow services:
-```bash
-docker-compose up -d
-```
+The pipeline will now run daily, fetching and processing weather data.
 
-3. Access the Airflow web interface at `http://localhost:8080` and enable the `weather_data_pipeline` DAG.
-
-## Customization
-- To change the target city or other settings, edit `config/pipeline_config.yaml`.
-- Modify the DAG schedule in `workflows/weather_pipeline.py` if you want to change the frequency of data collection.
+## Project Structure
+- `config/`: Configuration files
+- `tasks/`: Python scripts for data fetching and processing
+- `workflows/`: Airflow DAG definition
+- `Dockerfile` and `docker-compose.yaml`: For Docker setup (optional)
 
 ## Troubleshooting
-- If you encounter permission issues, ensure that the `data/raw` and `data/processed` directories exist and have write permissions.
+- If you encounter any "command not found" errors, make sure your virtual environment is activated.
 - Check Airflow logs for detailed error messages if the pipeline fails.
 
-## Contributing
-Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests.
+## Next Steps
+- Customize the pipeline for different cities or data points
+- Add data visualization or reporting tasks
+- Implement error handling and notifications
 
-## License
-This project is licensed under the MIT License - see the LICENSE.md file for details.
+Enjoy your weather data pipeline!
